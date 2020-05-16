@@ -12,6 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.menu');
+	$title="Inicio";
+    return view('layouts.menu',compact('title'));
 });
+
+Route::get('/tienda', 'TiendaController@index')->name('listar_tienda');
+Route::post('tiend', 'TiendaController@store')->name('crear_tienda');
+Route::put('ed_tiend/{cod}', 'TiendaController@update')->name('editar_tienda');
+Route::delete('el_tiend/{cod}', 'TiendaController@delete')->name('eliminar_tienda');
 
