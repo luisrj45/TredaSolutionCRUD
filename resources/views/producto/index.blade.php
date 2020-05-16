@@ -1,58 +1,60 @@
 @extends ('layouts.menu')
 @section ('contenido')
-<div class="card col-lg-12">
+<div class="card">
       <div class="card-header">
                 <h3 class="card-title">
-                  Tiendas
+                  Productos
                 </h3>
                   <span style="position: absolute;top: 10px;right: 40px;" data-toggle="tooltip" data-placement="bottom" title="Nueva Tienda">
-                         <a class="btn btn-success" data-toggle="modal" data-target="#modal-default-tienda">Nueva</a>
+                         <a class="btn btn-success" data-toggle="modal" data-target="#modal-default-producto">Nuevo</a>
                     </span>
         </div><!-- /.card-header -->
 
-          @include('tienda.create')
-          @include('tienda.view')
+          @include('producto.create')
+          @include('producto.view')
+          @include('producto.image')
           
-
+          @include('producto.delete')
+          
 
             <!-- /.card-header -->
         <div class="card-body">
-                <div class="tab-content p-0">
-                  <!-- Morris chart - Sales -->
-                  	<div class="chart tab-pane active" id="revenue-chart">
-                      <div class="col-12">
-                        <div class="card">
-                          <div class="card-header">
+                
                             <div class="card-tools">
                               <form id="search-form" method="GET" autocomplete="off" action="{{url('tienda')}}">
                                 <div class="input-group input-group-sm">
-                                    <input data-toggle="tooltip" data-placement="bottom" title="Buscar por: ID, nombre y fecha de apertura" type="search" name="search" class="form-control float-right" placeholder="Buscar..." value="{{ $query }}">
+                                    <input data-toggle="tooltip" data-placement="bottom" title="Buscar por: SKU, nombre y valor" type="search" name="search" class="form-control float-right" placeholder="Buscar..." value="">
                                           <div class="input-group-append">
                                               <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                                           </div>
                                   </div>
                                 </form>
                             </div>
-                          </div>
 
-						              <div class="card-body table-responsive p-0" style="min-height: 200px;">
-						                <table class="table table-bordered table-striped table-head-fixed">
+						              <div class="table-responsive" style="min-height: 200px;">
+						                <table class="table table-bordered">
 						                  <thead>
 						                    <tr>
 						                      <th>#</th>
-						                      <th>ID</th>
+						                      <th>Imagén</th>
+                                  <th>SKU</th>
                                   <th>Nombre</th>
-						                      <th>Fecha Apertura</th>
+                                  <th>Valor</th>
+                                  <th>Descripción</th>
+                                  <th>Tienda</th>
 						                      <th>Opciones</th>
 						                    </tr>
 						                  </thead>
 						                  <tbody >
-                                  @foreach ($tiendas as $tienda)
+                                  @foreach ($productos as $product)
                                     <tr>
-                                      <td>{{ $num++ }}<input type="hidden" name="code" value="{{ $tienda->id_tienda }}"></td>
-                                      <td>{{ $tienda->id }}</td>
-                                      <td>{{ $tienda->nombre }}</td>
-                                      <td>@php echo date("d/m/Y", strtotime($tienda->fecha_apertura)); @endphp</td>
+                                      <td>{{ $num++ }}<input type="hidden" name="code" value="{{ $product->id_producto }}"></td>
+                                      <td><img class="foto" src="{{ $product->imagen }}" alt="" width="50px" height="50px" /></td>
+                                      <td>{{ $product->sku }}</td>
+                                      <td>{{ $product->producto_nombre}}</td>
+                                      <td>{{ number_format($product->valor) }}</td>
+                                      <td><span data-toggle="tooltip" data-placement="bottom" title="{{ $product->descripcion }}">{{ Str::limit($product->descripcion,20) }}</span></td>
+                                      <td>{{ $product->producto_nombre }}</td>
                                       <td>
                                         <a data-toggle="tooltip" data-placement="bottom" title="Ver Tienda" data-keyboard="true" data-backdrop="static" class="btn btn-primary btn-xs view">Ver
                                         </a>
@@ -62,9 +64,9 @@
                                       </td>
                                     </tr>
                                   @endforeach
-                                  @if($tiendas->total()==0)
+                                  @if($productos->total()==0)
                                         <tr>
-                                          <td colspan="5">No existen tiendas registradas</td>
+                                          <td colspan="8">No existen productos registradas</td>
                                         </tr>
                                       @endif
 						                  </tbody>
@@ -72,17 +74,12 @@
                         </div>
                         <br>
                             
-	                </div>
-                            {{ $tiendas->links()}}
+                            {{ $productos->links()}}
 
-                  </div>
-                  </div>
                    	
-                </div>
         </div><!-- /.card-body -->
 </div>
-            @include('tienda.edit')
-            @include('tienda.delete')
+            @include('producto.edit')
 
         <script type="text/javascript">
             function cargar(){
@@ -90,7 +87,7 @@
             }
              
             function cargarInicio(){
-              location.replace("/tiendas")();
+              location.replace("/productos")();
             }
         </script>
           

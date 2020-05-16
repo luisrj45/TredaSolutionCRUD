@@ -1,3 +1,4 @@
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <div class="modal fade" id="modal-default-edit" role="dialog" data-keyboard="true" data-backdrop="static">
        <div class="modal-dialog">
          <div class="modal-content">
@@ -8,22 +9,22 @@
              </button>
            </div>
            <div class="modal-body">
-             <form id="editar_tienda" autocomplete="off">
+               <form  id="form_producto_editar"  autocomplete="off"  enctype="multipart/form-data">
                  {{ csrf_field() }}
-                               <input id="id_t" type="hidden" class="form-control">
-                        <div class="form-group">
+                 <input type="hidden" id="id_prod">
+                      <div class="form-group">
                           <div >
                               <span class="text-danger">* Campos obligatorios</span>
                           </div>
                         </div>
                       <div class="form-group">
-                            <label for="id" class="control-label">ID<span class="text-danger">*</span></label>
+                            <label for="sku" class="control-label">SKU<span class="text-danger">*</span></label>
 
                             <div >
-                                <input  type="text" id="ideditar" class="form-control" name="id" >
+                                <input  type="text" id="sku_editar" class="form-control" name="sku" >
 
                                     <span class="text-danger ">
-                                        <strong id="ed_id" ></strong>
+                                        <strong id="ed_sku" ></strong>
                                     </span>
                             </div>
                         </div>
@@ -31,25 +32,52 @@
                             <label for="nombre" class="control-label">Nombre<span class="text-danger">*</span></label>
 
                             <div >
-                                <input  type="text" id="nombreeditar" class="form-control" name="nombre" >
+                                <input  type="text" id="nombre_editar" class="form-control" name="nombre" >
 
                                     <span class="text-danger ">
                                         <strong id="ed_nombre" ></strong>
                                     </span>
                             </div>
                         </div>
-                         <div class="form-group">
-                            <label for="fecha" class="control-label">Fecha de Apertura(dd-mm-YYYY)<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <label for="descripcion" class="control-label">Descripción<span class="text-danger">*</span></label>
 
                             <div >
-                                <input  type="text" id="fechaeditar" class="form-control" name="fecha" >
-
-                                    <span class="text-danger ">
-                                        <strong id="ed_fecha" ></strong>
+                                <textarea id="descripcion_editar" name="descripcion" class="form-control"  rows="3"  style="resize: none;"></textarea>
+                                    <span class="text-danger">
+                                        <strong id="ed_descripcion"></strong>
                                     </span>
                             </div>
                         </div>
-                   </div>
+                        <div class="form-group">
+                            <label for="valor" class="control-label">Valor<span class="text-danger">*</span></label>
+
+                            <div>
+                                <input  type="text" id="valor_editar" class="form-control" name="valor" >
+
+                                    <span class="text-danger ">
+                                        <strong id="ed_valor" ></strong>
+                                    </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tienda" class="control-label">Tienda<span class="text-danger">*</span></label>
+
+                            <div>
+                                <select data-live-search="true"  tabindex="-98" id="tienda_editar" name="tienda" class="form-control selectpicker">
+                                      <option value="0" disabled="true" selected="true">Seleccione una Tienda</option>
+
+                                    @foreach ($tienda as $tiend)
+                                      @if($tiend->deleted_at===null)
+                                        <option value="{{ $tiend->id_tienda }}">{{ $tiend->nombre }}</option>
+                                      @endif
+                                    @endforeach
+                                    </select>
+                                    <span class="text-danger">
+                                        <strong id="ed_tienda"></strong>
+                                    </span>
+                            </div>
+                        </div>
                    <div class="modal-footer justify-content-between">
                       <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
                       <div class="" id="message_editar" style="display: none"></div>
@@ -67,12 +95,14 @@ $(document).ready(function () {
                $('.table tbody tr').click(function(e)
                {
                  var cod = $(this).find('input[type="hidden"]').val();
-                 var app = @json($tiendas);
-                 let valores = app.data.filter(valor=>valor.id_tienda == cod)
-                      $("#id_t").val(valores[0].id_tienda);
-                      $("#ideditar").val(valores[0].id);
-                      $("#nombreeditar").val(valores[0].nombre);
-                      $("#fechaeditar").val(valores[0].fecha_apertura);
+                 var app = @json($productos);
+                 let valores = app.data.filter(valor=>valor.id_producto == cod)
+                      $("#id_prod").val(valores[0].id_producto);
+                      $("#sku_editar").val(valores[0].sku);
+                      $("#nombre_editar").val(valores[0].producto_nombre);
+                      $("#descripcion_editar").val(valores[0].descripcion);
+                      $("#valor_editar").val(valores[0].valor);
+                      $("#tienda_editar").val(valores[0].tienda);
 
 
                     e.preventDefault();
@@ -81,14 +111,14 @@ $(document).ready(function () {
  $.validator.setDefaults({
    submitHandler: function ()
    {
-     $('#update').attr("disabled", true);
-             var cod=$('#id_t').val();
+     //$('#update').attr("disabled", true);
+             var cod=$('#id_prod').val();
             //var parametros = $('#save_category').serialize(),
               $.ajax({
-                 type: "PUT",
-                 url: "/ed_tiend/"+cod,
-                 data: $('#editar_tienda').serialize(),
-                  beforeSend: function(response){
+                type: "PUT",
+                 url: "/ed_product/"+cod,
+                 data: $('#form_producto_editar').serialize(),
+            beforeSend: function(response){
 
                    $('strong').html('');
                     $('#message_editar').css('display', 'block');
@@ -97,7 +127,6 @@ $(document).ready(function () {
                    },
                  success: function(data)
                  {
-                 $("#form_tienda")[0].reset();
                     $('#message_editar').css('display', 'block');
                     $('#message_editar').html("Operacion Exitosa");
                     $('#message_editar').removeClass();
@@ -131,30 +160,49 @@ $(document).ready(function () {
                     $('#message_editar').html("Operacion Fallida...");
                     $('#message_editar').removeClass();
                     $('#message_editar').addClass('alert alert-danger');
-                 $('#update').attr("disabled", false);
                  setTimeout(function(){ $('#message_editar').css('display', 'none') }, 3000);
                  }
              });
     }
    });
 
- $('#editar_tienda').validate({
+ $('#form_producto_editar').validate({
    rules: {
-     name: {
-       required: true,
-     },
-     description: {
-       required: true,
-     },
-   },
-   messages: {
-     name: {
-       required: "Por favor ingrese un nombre",
-     },
-     description: {
-       required: "Por favor ingrese una descripción",
-     },
-     },
+         sku: {
+           required: true,
+         },
+         nombre: {
+           required: true,
+         },
+         descripcion: {
+           required: true,
+         },
+         valor: {
+           required: true,
+         },
+         tienda: {
+           required: true,
+           min:1,
+         },
+       },
+       messages: {
+         sku: {
+           required: "Por favor ingrese un SKU",
+         },
+         nombre: {
+           required: "Por favor ingrese un nombre",
+         },
+         descripcion: {
+           required: "Por favor ingrese una descripción",
+         },
+         valor: {
+           required: "Por favor ingrese un valor",
+         },
+         tienda: {
+           required: "Por favor seleccione una tienda",
+           min: "Por favor ingrese una tienda",
+         },
+       },
    errorElement: 'span',
    errorPlacement: function (error, element) {
      error.addClass('invalid-feedback');

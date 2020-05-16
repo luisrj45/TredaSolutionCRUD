@@ -25,8 +25,8 @@ class TiendaUpdateRequest extends FormRequest
     {
         return [
            'id' => 'required|string|unique:tiendas,id_tienda,'.$this->id_tienda,
-           'nombre' => 'required',
-           'fecha' => 'required',
+           'nombre' => 'required|string',
+           'fecha' =>  ['required','regex:/^([0-2][0-9]|(3)[0-1])(-)(((0)[0-9])|((1)[0-2]))(-)((?:2)\d{3})$/'],//se valida que la fecha sea en el formato dd-mm-aaaa ademas que la fecha sea mayor a 2000
         ];
     }
 }

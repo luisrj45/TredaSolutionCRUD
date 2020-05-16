@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Carbon\Carbon;
-class TiendaStoreRequest extends FormRequest
+
+class ProductoImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class TiendaStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|string|unique:tiendas',//,'regex:/^\d+$/'
-           'nombre' => 'required|string',
-           'fecha' => ['required','regex:/^([0-2][0-9]|(3)[0-1])(-)(((0)[0-9])|((1)[0-2]))(-)((?:2)\d{3})$/'],//se valida que la fecha sea en el formato dd-mm-aaaa ademas que la fecha sea mayor a 2000
+           'imagen' => ['required','image','mimes:jpeg,png,jpg'],//valida que es obligatorio y la imagen sea en los formatos jpeg, png y jpg
         ];
     }
 }

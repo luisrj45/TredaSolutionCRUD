@@ -14,8 +14,13 @@ class TiendaController extends Controller
             $title='Tiendas';
             $query=trim($request->get('search'));
                 $tiendas=DB::table('tiendas')
-                ->orderBy('id_tienda','desc')
+            	->orwhere('id','LIKE','%'.$query.'%')
             	->where('deleted_at','=',null)
+            	->orwhere('nombre','LIKE','%'.$query.'%')
+            	->where('deleted_at','=',null)
+            	->orwhere('fecha_apertura','LIKE','%'.$query.'%')
+            	->where('deleted_at','=',null)
+                ->orderBy('id_tienda','desc')
                 ->paginate(10);
                 $num=$tiendas->firstItem();
                

@@ -3,17 +3,17 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Eliminar Tienda</h4>
+              <h4 class="modal-title">Eliminar Producto</h4>
               <button type="button" class="btn btn-danger close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <form role="form" id="eliminar_tienda" autocomplete="off">
+              <form role="form" id="eliminar_producto" autocomplete="off">
                   {{ csrf_field() }}
                                 <input id="idd" type="hidden" class="form-control" name="idd">
-                                <label>Desea eliminar la Tienda?</label><br>
-																<span id="tienda_eli"></span>
+                                <label>Desea eliminar el producto?</label><br>
+																<span id="producto_eliminar"></span>
 
                     </div>
                     <div class="modal-footer justify-content-between">
@@ -36,26 +36,26 @@
 							$('.table tbody tr').click(function(e)
 							{
 								var cod = $(this).find('input[type="hidden"]').val();
-								var app = @json($tiendas);
-								let valores = app.data.filter(valor=>valor.id_tienda == cod)
-									 $("#idd").val(valores[0].id_tienda);
-									 $("#tienda_eli").html(valores[0].nombre);
+								var app = @json($productos);
+								let valores = app.data.filter(valor=>valor.id_producto == cod)
+									 $("#idd").val(valores[0].id_producto);
+									 $("#producto_eliminar").html(valores[0].producto_nombre);
 									 e.preventDefault();
 							});
 
             });
 
-          $( "#eliminar_tienda" ).submit(function( event ) {
+          $( "#eliminar_producto" ).submit(function( event ) {
               $('#delete').attr("disabled", true);
               var cod=$('#idd').val();
-             //var parametros = $('#save_tienda_eliy').serialize(),
+             //var parametros = $('#save_producto_eliminary').serialize(),
                $.ajax({
                 headers: {
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                           },
                   type: "DELETE",
-                  url: "/el_tiend/"+cod,
-                  data: $('#eliminar_tienda').serialize(),
+                  url: "/el_product/"+cod,
+                  data: $('#eliminar_producto').serialize(),
                    beforeSend: function(response){
                    $('#Cargando_el').css('display', 'block');
                     $('#Cargando_el').html("Eliminando...");
