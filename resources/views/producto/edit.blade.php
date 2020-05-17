@@ -1,4 +1,3 @@
-<meta name="csrf-token" content="{{ csrf_token() }}" />
 <div class="modal fade" id="modal-default-edit" role="dialog" data-keyboard="true" data-backdrop="static">
        <div class="modal-dialog">
          <div class="modal-content">

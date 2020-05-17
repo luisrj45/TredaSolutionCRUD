@@ -43,12 +43,12 @@ class ProductoController extends Controller
               $pact= "/images/productos/".$nombre_imagen;
 
                 $producto=new ProductoModel;
-                $producto->sku=$request->get('sku');
-                $producto->nombre=$request->get('nombre');
-                $producto->descripcion=$request->get('descripcion');
-                $producto->valor=$request->get('valor');
+                $producto->sku=$request->post('sku');
+                $producto->nombre=$request->post('nombre');
+                $producto->descripcion=$request->post('descripcion');
+                $producto->valor=$request->post('valor');
                 $producto->imagen=$pact;
-                $producto->tienda=$request->get('tienda');
+                $producto->tienda=$request->post('tienda');
                 $producto->save();
             
 

@@ -39,10 +39,16 @@
         <a class="nav-link" href="#">Soap / Rest</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Logica</a>
+        <a href="{{ route('listar_multiplos') }}" class="nav-link" href="#">Logica Multiplos de 3 y 5</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Sql</a>
+        <a href="{{ route('listar_camel') }}" class="nav-link" href="#">Logica CamelCase</a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ route('listar_frase') }}" class="nav-link" href="#">Logica Palabra Invertida</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('listar_mysql') }}">MySql</a>
       </li>    
     </ul>
   </div>  

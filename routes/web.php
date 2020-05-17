@@ -27,3 +27,11 @@ Route::put('ed_product/{cod}', 'ProductoController@update')->name('editar_produc
 Route::delete('el_product/{cod}', 'ProductoController@delete')->name('eliminar_producto');
 Route::post('imag_article', 'ProductoController@imagen')->name('imagen_producto');
 
+Route::get('multiplos', 'LogicaController@multiplos')->name('listar_multiplos'); 
+Route::get('camelcase', 'LogicaController@camelcase')->name('listar_camel'); 
+Route::get('frase', 'LogicaController@frase')->name('listar_frase'); 
+
+Route::get('mysql', function(){
+	$title="Mysql";
+    return view('mysql.index',compact('title'));
+})->name('listar_mysql'); 
