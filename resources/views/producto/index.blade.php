@@ -54,7 +54,7 @@
                                       <td>{{ $product->producto_nombre}}</td>
                                       <td>{{ number_format($product->valor) }}</td>
                                       <td><span data-toggle="tooltip" data-placement="bottom" title="{{ $product->descripcion }}">{{ Str::limit($product->descripcion,20) }}</span></td>
-                                      <td>{{ $product->producto_nombre }}</td>
+                                      <td>{{ $product->tienda_nombre }}</td>
                                       <td>
                                         <a data-toggle="tooltip" data-placement="bottom" title="Ver Tienda" data-keyboard="true" data-backdrop="static" class="btn btn-primary btn-xs view">Ver
                                         </a>
