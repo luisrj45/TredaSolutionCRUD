@@ -105,10 +105,10 @@ $(document).ready(function () {
  $.validator.setDefaults({
    submitHandler: function ()
    {
-    // $('#register').attr("disabled", true);
+     //$('#register').attr("disabled", true);
     //var parametros = $('#form_producto').serialize(),
   $('#form_producto').on('submit', function(event){
-  event.preventDefault();
+                    event.stopImmediatePropagation();
       $.ajax({
               headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -120,25 +120,27 @@ $(document).ready(function () {
              contentType: false,
              cache: false,
              processData: false,
-              beforeSend: function (xhr) { // Add this line
-                xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
+              beforeSend: function (er) { 
                 $('strong').html('');
                     $('#msgproducto').css('display', 'block');
                     $('#msgproducto').html("Cargando...");
                     $('#msgproducto').addClass('alert alert-warning');
                },
-             success: function(data)
+             error: function(error)
              {
-                    $("#form_producto")[0].reset();
+              if (error.status==200) 
+              {
+                $("#form_producto")[0].reset();
                     $('#msgproducto').css('display', 'block');
                     $('#msgproducto').html("Operacion Exitosa");
                     $('#msgproducto').removeClass();
                     $('#msgproducto').addClass("alert alert-success");
                     $('#register').attr("disabled", false);
-                 setTimeout(function(){ $('#msgproducto').css('display', 'none') }, 5000);
-              },
-             error: function(error)
-             {
+                 setTimeout(function(){ $('#msgproducto').css('display', 'none') }, 8000);
+
+              }
+              else if(error.status==422)
+              {
                 var obj = error.responseJSON.errors;
 
                 mostrarPropiedades(obj);
@@ -166,6 +168,8 @@ $(document).ready(function () {
                     $('#msgproducto').addClass('alert alert-danger');
                  $('#register').attr("disabled", false);
                  setTimeout(function(){ $('#msgproducto').css('display', 'none') }, 5000);
+              }
+                
                }
      });
      });

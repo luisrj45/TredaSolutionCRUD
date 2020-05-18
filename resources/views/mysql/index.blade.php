@@ -23,7 +23,7 @@
                             <h3>reporte 2</h3>
                             <span>select s.nombre as sucursal, TRUNCATE((c.valor_poliza_iva_incl+c.valor_poliza+c.valor_poliza_cuota),0) as valorTotalPagado from cotizacion as c INNER JOIN  sucursal as s ON c.id_sucursal=s.id GROUP BY s.nombre ORDER BY valorTotalPagado asc</span>
                             <h3>reporte 3</h3>
-                            <span>select p.cc as CC, p.nombre as Nombre, e.institucion as Institucion, max(e.fecha) as Fecha from estudios as e INNER JOIN  persona as p ON p.cc=e.fkpersona GROUP BY p.cc</span>
+                            <span>select p.cc as CC, p.nombre as Nombre, e.institucion as Institucion, max(e.fecha) as Fecha from estudios as e INNER JOIN persona as p ON p.cc=e.fkpersona AND e.fecha=(select max(fecha) from estudios where fkpersona=p.cc  group by fkpersona) GROUP BY p.cc</span>
                             <h3>reporte 4</h3>
                             <span>select e.cc as CC, e.nombre, e.cargo, e.area as área, j.nombre as 'Nombre Jefe' from empleados as e INNER JOIN  jefes as j ON e.id_jefe=j.id</span>
                         </div>

@@ -19,12 +19,12 @@ class LogicaController extends Controller
             $suma+=$i; //se suma el valor de cada multiplo de 3 o 5 
            }
         }
-        if($suma == 0)//valido que la variable suma sea igual a cero para asignarle un valor 0 al array y evitar errores en laravel 
+        if($suma == 0) /*valido que la variable suma sea igual a cero para asignarle un valor 0 al array y evitar errores en laravel */
         { 
             $valores[0]=0;
         }
-        if ($n=="" || $n==null) { //valido que la variable $n sea igual a vacio o nulo para asignarle el 0 como valor al array y evitar errores en laravel 
-        { 
+        if ($n=="" || $n==null)  //valido que la variable $n sea igual a vacio o nulo para asignarle el 0 como valor al array y evitar errores en laravel 
+        {
             $query=0;
 
         }else{

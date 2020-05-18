@@ -35,3 +35,9 @@ Route::get('mysql', function(){
 	$title="Mysql";
     return view('mysql.index',compact('title'));
 })->name('listar_mysql'); 
+Route::get('rest', function(){
+	$title="Rest";
+    return view('rest.index',compact('title'));
+})->name('Servicio_rest'); 
+Route::get('rest_api/{cod}', 'RestController@index')->name('buscar_producto');
+

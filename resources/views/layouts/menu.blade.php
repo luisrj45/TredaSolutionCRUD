@@ -36,7 +36,13 @@
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">Soap / Rest</a>
+        <a class="nav-link" href="{{ route('listar_producto') }}">Productos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('listar_tienda') }}">Tiendas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('Servicio_rest') }}">Rest</a>
       </li>
       <li class="nav-item">
         <a href="{{ route('listar_multiplos') }}" class="nav-link" href="#">Logica Multiplos de 3 y 5</a>

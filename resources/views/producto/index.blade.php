@@ -10,20 +10,20 @@
                     </span>
         </div><!-- /.card-header -->
 
-          @include('producto.create')
           @include('producto.view')
           @include('producto.image')
           
           @include('producto.delete')
+          @include('producto.create')
           
 
             <!-- /.card-header -->
         <div class="card-body">
                 
                             <div class="card-tools">
-                              <form id="search-form" method="GET" autocomplete="off" action="{{url('tienda')}}">
+                              <form id="search-form" method="GET" autocomplete="off" action="{{url('productos')}}">
                                 <div class="input-group input-group-sm">
-                                    <input data-toggle="tooltip" data-placement="bottom" title="Buscar por: SKU, nombre y valor" type="search" name="search" class="form-control float-right" placeholder="Buscar..." value="">
+                                    <input data-toggle="tooltip" data-placement="bottom" title="Buscar por: SKU, nombre y valor" type="search" name="search" class="form-control float-right" placeholder="Buscar..." value="{{ $query }}">
                                           <div class="input-group-append">
                                               <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                                           </div>
@@ -66,7 +66,7 @@
                                   @endforeach
                                   @if($productos->total()==0)
                                         <tr>
-                                          <td colspan="8">No existen productos registradas</td>
+                                          <td colspan="8">No existen productos registrados</td>
                                         </tr>
                                       @endif
 						                  </tbody>
@@ -74,7 +74,7 @@
                         </div>
                         <br>
                             
-                            {{ $productos->links()}}
+                            {!! $productos->render()!!}
 
                    	
         </div><!-- /.card-body -->

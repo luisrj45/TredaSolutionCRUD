@@ -17,7 +17,7 @@ class ProductoController extends Controller
             $title='Productos';
             $query=trim($request->get('search'));
                  $productos=DB::table('productos as p')
-                 ->join('tiendas as t','t.id_tienda','=','p.id')
+                 ->join('tiendas as t','t.id_tienda','=','p.tienda')
                 ->orwhere('p.sku','LIKE','%'.$query.'%')
                 ->where('p.deleted_at','=',null)
                 ->orwhere('p.nombre','LIKE','%'.$query.'%')
