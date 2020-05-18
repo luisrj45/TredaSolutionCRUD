@@ -13,6 +13,8 @@
 
 Route::get('/', function () {
 	$title="Inicio";
+                  Log::channel('slack')->warning("el usuario busco la tienda :".$title);
+
     return view('layouts.menu',compact('title'));
 });
 
